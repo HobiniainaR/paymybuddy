@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une relation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .header div {
+            margin: 0 15px;
+        }
+        .header a.active {
+            color: blue;
+        }
+        .btn-orange {
+            background-color: orange;
+            color: white;
+        }
+        .form-group {
+            margin: 20px auto;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header d-flex justify-content-between py-3">
+        <div>Pay My Buddy</div>
+        <div><a th:href="@{/transferer}">Transférer</a></div>
+        <div><a th:href="@{/profil}">Profil</a></div>
+        <div><a th:href="@{/ajouter-relation}" class="active">Ajouter relation</a></div>
+        <div><a th:href="@{/logout}">Se déconnecter</a></div>
+    </div>
+
+    <form th:action="@{/ajouter-relation}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="email">Chercher une relation</label>
+            <input type="email" id="email" class="form-control" placeholder="Saisir une adresse mail" th:field="*{email}" />
+        </div>
+        <button type="submit" class="btn btn-orange btn-block">Ajouter</button>
+    </form>
+    <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
+</div>
+</body>
+</html>

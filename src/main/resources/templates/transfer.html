@@ -1,49 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Page de transfert</title>
+    <title>Transférer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
 <div class="container">
-    <h1>Pay My Buddy</h1>
-    <nav>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="/transfer">Transférer</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/profile">Profil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/add-relation">Ajouter relation</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout">Se déconnecter</a>
-            </li>
-        </ul>
-    </nav>
-    <form th:action="@{/transfer}" method="post" th:object="${newTransfer}">
-        <div class="form-group">
-            <label for="relation">Sélectionner une relation</label>
-            <select id="relation" th:field="*{relation}" class="form-control" required>
-                <option value="" disabled selected>Sélectionner une relation</option>
-
+    <div class="header d-flex justify-content-between py-3">
+        <div>Pay My Buddy</div>
+        <div><a th:href="@{/transferer}" class="active">Transférer</a></div>
+        <div><a th:href="@{/profil}">Profil</a></div>
+        <div><a th:href="@{/ajouter-relation}">Ajouter relation</a></div>
+        <div><a th:href="@{/logout}">Se déconnecter</a></div>
+    </div>
+    <h1 class="text-center">Page de transfert</h1>
+    <form th:action="@{/transfers/transfer}" th:object="${newTransfer}" method="post">
+        <div class="form-group mx-auto" style="width: 300px;">
+            <label for="receiver">Sélectionner une relation</label>
+            <select id="receiver" class="form-control" th:field="*{receiver}">
+                <option th:each="relation : ${relations}" th:value="${relation}" th:text="${relation}">Relation</option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group mx-auto" style="width: 300px;">
             <label for="description">Description</label>
-            <input type="text" id="description" th:field="*{description}" class="form-control" required>
+            <input type="text" id="description" class="form-control" placeholder="Description" th:field="*{description}" />
         </div>
-        <div class="form-group">
+        <div class="form-group mx-auto" style="width: 300px;">
             <label for="amount">Montant</label>
-            <input type="number" id="amount" th:field="*{amount}" class="form-control" required>
+            <input type="number" id="amount" class="form-control" placeholder="0€" th:field="*{amount}" />
         </div>
-        <button type="submit" class="btn btn-primary">Payer</button>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Payer</button>
     </form>
-    <h2>Mes Transactions</h2>
-    <table class="table">
+    <h2 class="mt-5">Mes Transactions</h2>
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>Relations</th>
@@ -53,9 +44,9 @@
         </thead>
         <tbody>
         <tr th:each="transfer : ${transfers}">
-            <td th:text="${transfer.relation}"></td>
-            <td th:text="${transfer.description}"></td>
-            <td th:text="${transfer.amount} + '€'"></td>
+            <td th:text="${transfer.receiver}">Relation</td>
+            <td th:text="${transfer.description}">Description</td>
+            <td th:text="${transfer.amount}">Montant</td>
         </tr>
         </tbody>
     </table>
