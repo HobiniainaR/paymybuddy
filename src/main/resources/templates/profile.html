@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .profile-item label {
+            margin: 0;
+        }
+        .profile-item span {
+            flex-grow: 1;
+            text-align: right;
+        }
+        .profile-item span::after {
+            content: '\003e';
+            margin-left: 10px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header d-flex justify-content-between py-3">
+        <div>Pay My Buddy</div>
+        <nav>
+            <a th:href="@{/transfers/transfer}">Transférer</a>
+            <a th:href="@{/profile}" class="active">Profil</a>
+            <a th:href="@{/ajouter-relation}">Ajouter relation</a>
+            <a th:href="@{/logout}">Se déconnecter</a>
+        </nav>
+    </div>
+
+
+    <div class="profile-item">
+        <label>Username</label>
+        <span th:text="${user.username}">@username</span>
+    </div>
+    <div class="profile-item">
+        <label>Mail</label>
+        <span th:text="${user.email}">nom@domain.com</span>
+    </div>
+    <div class="profile-item">
+        <label>Mot de passe</label>
+        <span>mot de passe</span>
+    </div>
+    <div class="text-center mt-4">
+        <a th:href="@{/profile/edit}" class="btn btn-warning">Modifier</a>
+    </div>
+</div>
+</body>
+</html>

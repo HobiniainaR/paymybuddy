@@ -19,4 +19,7 @@ public class Connection {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "origin_id", nullable = false)
+    private User origin;
 }

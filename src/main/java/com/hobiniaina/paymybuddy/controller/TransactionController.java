@@ -1,6 +1,8 @@
 package com.hobiniaina.paymybuddy.controller;
 
+import com.hobiniaina.paymybuddy.model.Connection;
 import com.hobiniaina.paymybuddy.model.Transaction;
+import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,9 @@ public class TransactionController {
 
     @GetMapping("/transfer")
     public String getTransferPage(Model model) {
-        List<String> relations = Arrays.asList("Laure-Anne", "Clara", "Luc");
+        User laure = new User();
+        laure.setUsername("laure");
+        List<Connection> relations = Arrays.asList( new Connection(1, laure,new User()), new Connection(1,new User(),new User()),new Connection(1,new User(),new User()));
         model.addAttribute("transfers", transactionService.getAllTransactions());
         model.addAttribute("newTransfer", new Transaction());
         model.addAttribute("relations", relations);

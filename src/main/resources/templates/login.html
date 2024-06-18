@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page de connexion</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            border: 1px solid #ddd;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .login-box .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .login-box .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .login-box .btn-secondary {
+            background-color: #f0ad4e;
+            border: none;
+        }
+        .login-box .btn-secondary:hover {
+            background-color: #ec971f;
+        }
+    </style>
+</head>
+<body>
+<div class="container login-container">
+    <div class="login-box">
+        <div class="text-center mb-4">
+            <button class="btn btn-secondary btn-block" disabled>Pay My Buddy</button>
+        </div>
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">Mail</label>
+                <input type="email" id="username" name="username" class="form-control" placeholder="Mail" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

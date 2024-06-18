@@ -38,11 +38,18 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `paymybuddy`.`connection` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
+  `origin_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `connection_ibfk_1` (`user_id` ASC) VISIBLE,
+  INDEX `connection_ibfk_2_idx` (`origin_id` ASC) VISIBLE,
   CONSTRAINT `connection_ibfk_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `paymybuddy`.`user` (`id`))
+    REFERENCES `paymybuddy`.`user` (`id`),
+  CONSTRAINT `connection_ibfk_2`
+    FOREIGN KEY (`origin_id`)
+    REFERENCES `paymybuddy`.`connection` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
@@ -57,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `paymybuddy`.`transaction` (
   `sender_id` INT NOT NULL,
   `receiver_id` INT NOT NULL,
   `description` VARCHAR(255) NOT NULL,
-  `amount` DECIMAL(10,2) NOT NULL,
+  `amount` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `transaction_ibfk_1` (`sender_id` ASC) VISIBLE,
   INDEX `transaction_ibfk_2` (`receiver_id` ASC) VISIBLE,

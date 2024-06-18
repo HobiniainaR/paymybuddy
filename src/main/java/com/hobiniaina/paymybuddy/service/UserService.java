@@ -2,24 +2,25 @@ package com.hobiniaina.paymybuddy.service;
 
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-    public User findUserByEmail(String email) {
+    @Autowired
+    private UserRepository userRepository;
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-}
+    public User getCurrentUser() {
 
+        return userRepository.findByUsername("currentUser");
+    }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+}

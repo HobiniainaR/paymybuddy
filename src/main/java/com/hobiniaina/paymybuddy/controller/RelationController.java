@@ -25,9 +25,9 @@ public class RelationController {
 
     @PostMapping
     public String addRelation(@ModelAttribute("user") User user, Model model) {
-        User existingUser = userService.findUserByEmail(user.getEmail());
+        User existingUser = userService.findByEmail(user.getEmail());
         if (existingUser != null) {
-              return "redirect:/ajouter-relation?success";
+            return "redirect:/ajouter-relation?success";
         } else {
             model.addAttribute("error", "User not found");
             return "ajouter-relation";
