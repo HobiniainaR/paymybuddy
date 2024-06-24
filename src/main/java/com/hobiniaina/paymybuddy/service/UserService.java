@@ -5,6 +5,8 @@ import com.hobiniaina.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -21,6 +23,14 @@ public class UserService {
 
     public void updateUser(User user) {
         userRepository.save(user);
+    }
+
+    public List<User> getAllRelations() {
+               return userRepository.findAll();
+    }
+
+    public User findUserById(Integer id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
 }

@@ -10,14 +10,14 @@
     <div class="header d-flex justify-content-between py-3">
         <div>Pay My Buddy</div>
         <nav>
-            <a th:href="@{/transfers/transfer}" class="active">Transférer</a>
+            <a th:href="@{/transfers/transfer/1}" class="active">Transférer</a>
             <a th:href="@{/profile}">Profil</a>
             <a th:href="@{/ajouter-relation}">Ajouter relation</a>
             <a th:href="@{/logout}">Se déconnecter</a>
         </nav>
     </div>
 
-    <form th:action="@{/transfers/transfer}" th:object="${newTransfer}" method="post" class="mb-5">
+    <form th:action="@{/transfers/transfer/1}" th:object="${newTransfer}" method="post" class="mb-5">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="receiver">Sélectionner une relation</label>
