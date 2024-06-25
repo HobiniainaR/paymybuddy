@@ -5,10 +5,7 @@ import com.hobiniaina.paymybuddy.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
@@ -17,14 +14,14 @@ public class ProfileController {
 
     private final UserService userService;
 
-    @GetMapping("/profile")
+    @GetMapping
     public String getProfilePage(Model model) {
         User currentUser = userService.getCurrentUser();
         model.addAttribute("user", currentUser);
         return "profile";
     }
 
-    @PostMapping("/profile")
+    @PostMapping
     public String updateProfile(
             @RequestParam String username,
             @RequestParam String email,

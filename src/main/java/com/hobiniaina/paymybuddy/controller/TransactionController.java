@@ -1,5 +1,6 @@
 package com.hobiniaina.paymybuddy.controller;
 
+import com.hobiniaina.paymybuddy.dto.TransactionDTO;
 import com.hobiniaina.paymybuddy.model.Connection;
 import com.hobiniaina.paymybuddy.model.Transaction;
 import com.hobiniaina.paymybuddy.model.User;
@@ -32,15 +33,17 @@ public class TransactionController {
     }
 
     @PostMapping("/transfer/{userId}")
-    public String postTransfer(@PathVariable Integer userId, @ModelAttribute Transaction newTransfer, Model model) {
+    public String postTransfer(@PathVariable Integer userId, @ModelAttribute TransactionDTO transactionDTO, Model model) {
+        transactionService.createAndSaveTransaction(userId, transactionDTO);
+
         User user = new User();
         user.setId(userId);
-        newTransfer.setSender(user);
-        transactionService.saveTransaction(newTransfer);
-        List<Connection> relations = connectionService.getConnectionsByUser(user);
+
+        List<Connection> relations = transactionService.getConnectionsByUser(user);
         model.addAttribute("transfers", transactionService.getAllTransactionsByUser(user));
-        model.addAttribute("newTransfer", new Transaction());
+        model.addAttribute("newTransfer", new TransactionDTO());
         model.addAttribute("relations", relations);
+
         return "transfer";
     }
 }

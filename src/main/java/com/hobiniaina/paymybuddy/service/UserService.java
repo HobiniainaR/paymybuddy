@@ -18,8 +18,14 @@ public class UserService {
     }
     public User getCurrentUser() {
 
-        return userRepository.findByUsername("currentUser");
+        User user = new User();
+        user.setUsername("laure");
+        user.setEmail("laure@domain.com");
+        user.setPassword("laurePassword");
+        return user;
     }
+
+
 
     public void updateUser(User user) {
         userRepository.save(user);
