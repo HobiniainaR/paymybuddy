@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransactionDTO {
     private Integer id;
-    private Integer receiver_id;
+    private Integer receiverId;
     private String description;
     private Double amount;
 

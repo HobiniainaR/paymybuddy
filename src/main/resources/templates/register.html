@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-secondary {
+            background-color: #ff9900;
+            border-color: #ff9900;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center">
+                <button class="btn btn-secondary btn-block">Pay My Buddy</button>
+            </h2>
+            <form th:action="@{/register}" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Mail</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

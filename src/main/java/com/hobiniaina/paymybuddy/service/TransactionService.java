@@ -5,6 +5,7 @@ import com.hobiniaina.paymybuddy.model.Connection;
 import com.hobiniaina.paymybuddy.model.Transaction;
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.repository.TransactionRepository;
+import com.hobiniaina.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,12 @@ public class TransactionService {
 
     @Autowired
     private  TransactionRepository transactionRepository;
+    @Autowired
     private  ConnectionService connectionService;
+    @Autowired
+
+    private  UserRepository userRepository;
+
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
     }
@@ -28,12 +34,11 @@ public class TransactionService {
         return transactionRepository.findBySenderId(user.getId());
     }
 
-       public void createAndSaveTransaction(Integer userId, TransactionDTO transactionDTO) {
-        User sender = new User();
-        sender.setId(userId);
+    public void createAndSaveTransaction(Integer userId, TransactionDTO transactionDTO)  {
 
-        User receiver = new User();
-        receiver.setId(transactionDTO.getReceiver_id());
+        User sender = userRepository.findById(userId).orElseThrow();
+
+        User receiver =userRepository.findById(transactionDTO.getReceiverId()).orElseThrow();
 
         Transaction newTransfer = new Transaction();
         newTransfer.setSender(sender);

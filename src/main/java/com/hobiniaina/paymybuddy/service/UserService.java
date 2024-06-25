@@ -18,10 +18,8 @@ public class UserService {
     }
     public User getCurrentUser() {
 
-        User user = new User();
-        user.setUsername("laure");
-        user.setEmail("laure@domain.com");
-        user.setPassword("laurePassword");
+        User user = userRepository.findById(1).orElseThrow();
+
         return user;
     }
 
