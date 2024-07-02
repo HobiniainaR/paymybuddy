@@ -24,5 +24,6 @@ public class Transaction {
     private User receiver;
 
     private String description;
+
     private Double amount;
 }

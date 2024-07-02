@@ -16,6 +16,11 @@
             <a th:href="@{/logout}">Se déconnecter</a>
         </nav>
     </div>
+</div>
+
+<div class="alert alert-info" role="alert">
+    Votre solde actuel est de : <span th:text="${balance}">0.00</span> €
+</div>
 
     <form th:action="@{/transfers/transfer}" th:object="${newTransfer}" method="post" class="mb-5">
         <div class="form-row">

@@ -29,6 +29,7 @@ public class TransactionController {
         model.addAttribute("transfers", transactionService.getAllTransactionsByUser(user));
         model.addAttribute("newTransfer", new TransactionDTO());
         model.addAttribute("relations", relations);
+        model.addAttribute("balance", user.getBalance());
         return "transfer";
     }
 

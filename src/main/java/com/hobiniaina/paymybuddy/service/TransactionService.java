@@ -15,12 +15,11 @@ import java.util.List;
 public class TransactionService {
 
     @Autowired
-    private  TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
     @Autowired
-    private  ConnectionService connectionService;
+    private ConnectionService connectionService;
     @Autowired
-
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
@@ -34,17 +33,34 @@ public class TransactionService {
         return transactionRepository.findBySenderId(user.getId());
     }
 
-    public void createAndSaveTransaction(Integer userId, TransactionDTO transactionDTO)  {
+    public void createAndSaveTransaction(Integer userId, TransactionDTO transactionDTO) {
 
-        User sender = userRepository.findById(userId).orElseThrow();
+         Double amount = transactionDTO.getAmount();
+        if (amount == null) {
+            throw new IllegalArgumentException("Le montant ne peut pas être nul.");
+        }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Le montant doit être supérieur à zéro.");
+        }
 
-        User receiver =userRepository.findById(transactionDTO.getReceiverId()).orElseThrow();
+        User sender = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Sender not found"));
+        User receiver = userRepository.findById(transactionDTO.getReceiverId()).orElseThrow(() -> new RuntimeException("Receiver not found"));
+
+        if (sender.getBalance() < amount) {
+            throw new RuntimeException("Solde insuffisant.");
+        }
+
+        sender.setBalance(sender.getBalance() - amount);
+        receiver.setBalance(receiver.getBalance() + amount);
+
+        userRepository.save(sender);
+        userRepository.save(receiver);
 
         Transaction newTransfer = new Transaction();
         newTransfer.setSender(sender);
         newTransfer.setReceiver(receiver);
         newTransfer.setDescription(transactionDTO.getDescription());
-        newTransfer.setAmount(transactionDTO.getAmount());
+        newTransfer.setAmount(amount);
 
         transactionRepository.save(newTransfer);
     }
@@ -52,5 +68,4 @@ public class TransactionService {
     public List<Connection> getConnectionsByUser(User user) {
         return connectionService.getConnectionsByUser(user);
     }
-
 }
