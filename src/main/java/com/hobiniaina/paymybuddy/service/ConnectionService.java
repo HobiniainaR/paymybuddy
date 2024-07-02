@@ -15,6 +15,6 @@ public class ConnectionService {
     private ConnectionRepository connectionRepository;
 
     public List<Connection> getConnectionsByUser(User user) {
-        return connectionRepository.findByUserId(user.getId());
+        return connectionRepository.findByOriginId(user.getId());
     }
 }

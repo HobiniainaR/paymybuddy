@@ -38,6 +38,6 @@ public class TransactionController {
         User user = userService.getCurrentUser();
         transactionService.createAndSaveTransaction(user.getId(), transactionDTO);
 
-        return  "redirect:/transfer";
+        return  "redirect:/transfers/transfer";
     }
 }
