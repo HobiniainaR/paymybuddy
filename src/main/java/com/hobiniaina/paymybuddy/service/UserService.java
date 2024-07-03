@@ -1,11 +1,10 @@
 package com.hobiniaina.paymybuddy.service;
 
+import com.hobiniaina.paymybuddy.dto.UserDTO;
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
@@ -18,21 +17,21 @@ public class UserService {
     }
     public User getCurrentUser() {
 
-        User user = userRepository.findById(1).orElseThrow();
-
-        return user;
+        return userRepository.findById(1).orElseThrow();
     }
-
-    public void updateUser(User user) {
+      public void updateUserProfile(UserDTO userDTO) {
+        User currentUser = getCurrentUser();
+        currentUser.setUsername(userDTO.getUsername());
+        currentUser.setEmail(userDTO.getEmail());
+        currentUser.setPassword(userDTO.getPassword());
+        userRepository.save(currentUser);
+    }
+    public void register(UserDTO userDTO) {
+        User user = new User();
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setBalance(0.0);
         userRepository.save(user);
     }
-
-    public List<User> getAllRelations() {
-               return userRepository.findAll();
-    }
-
-    public User findUserById(Integer id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
 }

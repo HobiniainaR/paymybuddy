@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="UTF-8">
     <title>Ajouter une relation</title>
@@ -25,7 +25,7 @@
 <div class="container">
     <div class="header d-flex justify-content-between py-3">
         <div>Pay My Buddy</div>
-        <div><a th:href="@{/transfers/transfer}">Transférer</a></div>
+        <div><a th:href=" @{/transfers/transfer}" class="active">Transférer</a></div>
         <div><a th:href="@{/profile}">Profil</a></div>
         <div><a th:href="@{/ajouter-relation}" class="active">Ajouter relation</a></div>
         <div><a th:href="@{/logout}">Se déconnecter</a></div>

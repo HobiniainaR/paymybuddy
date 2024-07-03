@@ -29,7 +29,7 @@ public class RelationController {
         if (existingUser != null) {
             return "redirect:/ajouter-relation?success";
         } else {
-            model.addAttribute("error", "User not found");
+            model.addAttribute("error", "Utilisateur non trouvé");
             return "ajouter-relation";
         }
     }

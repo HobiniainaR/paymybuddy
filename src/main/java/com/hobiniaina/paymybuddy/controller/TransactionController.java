@@ -2,7 +2,6 @@ package com.hobiniaina.paymybuddy.controller;
 
 import com.hobiniaina.paymybuddy.dto.TransactionDTO;
 import com.hobiniaina.paymybuddy.model.Connection;
-import com.hobiniaina.paymybuddy.model.Transaction;
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.service.ConnectionService;
 import com.hobiniaina.paymybuddy.service.TransactionService;

@@ -1,59 +1,69 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="UTF-8">
-    <title>Profil</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .profile-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid #ddd;
-        }
-        .profile-item label {
-            margin: 0;
-        }
-        .profile-item span {
-            flex-grow: 1;
-            text-align: right;
-        }
-        .profile-item span::after {
-            content: '\003e';
-            margin-left: 10px;
-            color: #999;
-        }
-    </style>
+    <title>Page de profil</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <div class="header d-flex justify-content-between py-3">
-        <div>Pay My Buddy</div>
-        <nav>
-            <a th:href="@{/transfers/transfer}">Transférer</a>
-            <a th:href="@{/profile}" class="active">Profil</a>
-            <a th:href="@{/ajouter-relation}">Ajouter relation</a>
-            <a th:href="@{/logout}">Se déconnecter</a>
-        </nav>
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <h1>Pay My Buddy</h1>
+        </div>
     </div>
+    <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-center">
+            <nav>
+                <a th:href="@{/transfers/transfer}">Transférer</a>
+                <a th:href="@{/profile}" class="active">Profil</a>
+                <a th:href="@{/ajouter-relation}">Ajouter relation</a>
+                <a th:href="@{/logout}">Se déconnecter</a>
+            </nav>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
 
 
-    <div class="profile-item">
-        <label>Username</label>
-        <span th:text="${user.username}">@username</span>
-    </div>
-    <div class="profile-item">
-        <label>Mail</label>
-        <span th:text="${user.email}">nom@domain.com</span>
-    </div>
-    <div class="profile-item">
-        <label>Mot de passe</label>
-        <span>mot de passe</span>
-    </div>
-    <div class="text-center mt-4">
-        <a th:href="@{/profile}" class="btn btn-warning">Modifier</a>
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <span th:text="${success}"></span>
+            </div>
+
+
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+
+            <form th:action="@{/profile}" th:object="${user}" method="post">
+                <div class="form-group row">
+                    <label for="username" class="col-sm-4 col-form-label">Username</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-4 col-form-label">Mail</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" id="email" name="email" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-4 col-form-label">Mot de passe</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password" name="password" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-warning">Modifier</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+
 </body>
 </html>

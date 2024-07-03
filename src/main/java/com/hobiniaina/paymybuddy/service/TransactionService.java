@@ -1,7 +1,6 @@
 package com.hobiniaina.paymybuddy.service;
 
 import com.hobiniaina.paymybuddy.dto.TransactionDTO;
-import com.hobiniaina.paymybuddy.model.Connection;
 import com.hobiniaina.paymybuddy.model.Transaction;
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.repository.TransactionRepository;
@@ -16,19 +15,9 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-    @Autowired
-    private ConnectionService connectionService;
+
     @Autowired
     private UserRepository userRepository;
-
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
-    }
-
-    public Transaction saveTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);
-    }
-
     public List<Transaction> getAllTransactionsByUser(User user) {
         return transactionRepository.findBySenderId(user.getId());
     }
@@ -63,9 +52,5 @@ public class TransactionService {
         newTransfer.setAmount(amount);
 
         transactionRepository.save(newTransfer);
-    }
-
-    public List<Connection> getConnectionsByUser(User user) {
-        return connectionService.getConnectionsByUser(user);
     }
 }

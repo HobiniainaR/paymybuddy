@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class ConnectionService {
-
     @Autowired
     private ConnectionRepository connectionRepository;
 
