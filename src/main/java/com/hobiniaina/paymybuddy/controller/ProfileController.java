@@ -1,6 +1,5 @@
 package com.hobiniaina.paymybuddy.controller;
 
-import com.hobiniaina.paymybuddy.dto.UserDTO;
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,17 +14,22 @@ public class ProfileController {
 
     private final UserService userService;
 
+    private Integer getCurrentUserId() {
+        return 1;
+    }
+
     @GetMapping
     public String getProfilePage(Model model) {
-        User currentUser = userService.getCurrentUser();
-        UserDTO userDTO = new UserDTO(currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword());
-        model.addAttribute("user", userDTO);
+        Integer userId = getCurrentUserId();
+        User currentUser = userService.findUserById(userId);
+        model.addAttribute("user", currentUser);
         return "profile";
     }
 
     @PostMapping
-    public String updateProfile(@ModelAttribute UserDTO user, Model model) {
+    public String updateProfile(@ModelAttribute User user, Model model) {
         try {
+            user.setId(getCurrentUserId());
             userService.updateUserProfile(user);
             model.addAttribute("user", user);
             model.addAttribute("success", "Profil mis à jour avec succès !");

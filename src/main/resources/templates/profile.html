@@ -1,57 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Page de profil</title>
+    <title>Profil</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <div class="row mt-4">
         <div class="col-12 text-center">
-            <h1>Pay My Buddy</h1>
+            <h1>Page de profil</h1>
         </div>
     </div>
     <div class="row mt-4">
         <div class="col-12 d-flex justify-content-center">
             <nav>
-                <a th:href="@{/transfers/transfer}">Transférer</a>
-                <a th:href="@{/profile}" class="active">Profil</a>
-                <a th:href="@{/ajouter-relation}">Ajouter relation</a>
-                <a th:href="@{/logout}">Se déconnecter</a>
+                <a href="/transfers/transfer">Transférer</a>
+                <a href="/profile" class="active">Profil</a>
+                <a href="/ajouter-relation">Ajouter relation</a>
+                <a href="/logout">Se déconnecter</a>
             </nav>
         </div>
     </div>
     <div class="row mt-4">
         <div class="col-md-6 offset-md-3">
-
-
-            <div th:if="${success}" class="alert alert-success" role="alert">
-                <span th:text="${success}"></span>
-            </div>
-
-
-            <div th:if="${error}" class="alert alert-danger" role="alert">
-                <span th:text="${error}"></span>
-            </div>
-
-            <form th:action="@{/profile}" th:object="${user}" method="post">
+            <form th:action="@{/profile}" method="post" th:object="${user}">
                 <div class="form-group row">
                     <label for="username" class="col-sm-4 col-form-label">Username</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="username" name="username">
+                        <input type="text" class="form-control" id="username" th:field="*{username}" readonly />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="email" class="col-sm-4 col-form-label">Mail</label>
                     <div class="col-sm-8">
-                        <input type="email" class="form-control" id="email" name="email" >
+                        <input type="email" class="form-control" id="email" th:field="*{email}" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="password" class="col-sm-4 col-form-label">Mot de passe</label>
                     <div class="col-sm-8">
-                        <input type="password" class="form-control" id="password" name="password" >
+                        <input type="password" class="form-control" id="password" th:field="*{password}" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="balance" class="col-sm-4 col-form-label">Balance</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" id="balance" th:field="*{balance}" step="0.01" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -60,10 +55,14 @@
                     </div>
                 </div>
             </form>
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <span th:text="${error}"></span>
+            </div>
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

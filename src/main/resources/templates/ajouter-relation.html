@@ -31,7 +31,7 @@
         <div><a th:href="@{/logout}">Se déconnecter</a></div>
     </div>
 
-    <form th:action="@{/ajouter-relation}" th:object="${user}" method="post">
+    <form th:action="@{/ajouter-relation}" th:object="${userDTO}" method="post">
         <div class="form-group">
             <label for="email">Chercher une relation</label>
             <input type="email" id="email" class="form-control" placeholder="Saisir une adresse mail" th:field="*{email}" />
