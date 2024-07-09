@@ -1,6 +1,5 @@
 package com.hobiniaina.paymybuddy.controller;
 
-import com.hobiniaina.paymybuddy.dto.UserDTO;
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,13 @@ public class RelationController {
 
     @GetMapping
     public String showAddRelationPage(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
+        model.addAttribute("user", new User());
         return "ajouter-relation";
     }
 
     @PostMapping
-    public String addRelation(@ModelAttribute("userDTO") UserDTO userDTO, Model model) {
-        User existingUser = userService.findByEmail(userDTO.getEmail());
+    public String addRelation(@ModelAttribute("user") User user, Model model) {
+        User existingUser = userService.findByEmail(user.getEmail());
         if (existingUser != null) {
             return "redirect:/ajouter-relation?success";
         } else {
@@ -35,3 +34,4 @@ public class RelationController {
         }
     }
 }
+
