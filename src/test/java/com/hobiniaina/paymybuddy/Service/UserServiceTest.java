@@ -116,4 +116,36 @@ public class UserServiceTest {
 
         assertEquals("Utilisateur non trouvé", exception.getMessage());
     }
+
+    @Test
+    public void testRegisterNewUser() {
+        User newUser = new User();
+        newUser.setId(2);
+        newUser.setEmail("newuser@example.com");
+        newUser.setUsername("newuser");
+        newUser.setPassword("newpassword");
+
+        when(userRepository.findByEmail("newuser@example.com")).thenReturn(null);
+
+        userService.register(newUser);
+
+        verify(userRepository, times(1)).save(newUser);
+        assertEquals(0.0, newUser.getBalance());
+    }
+
+    @Test
+    public void testRegisterExistingUser() {
+        User existingUser = new User();
+        existingUser.setId(2);
+        existingUser.setEmail("existing@example.com");
+        existingUser.setUsername("existinguser");
+        existingUser.setPassword("existingpassword");
+
+        when(userRepository.findByEmail("existing@example.com")).thenReturn(existingUser);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> userService.register(existingUser));
+
+        assertEquals("Un utilisateur avec cet email existe déjà", exception.getMessage());
+        verify(userRepository, times(0)).save(existingUser);
+    }
 }

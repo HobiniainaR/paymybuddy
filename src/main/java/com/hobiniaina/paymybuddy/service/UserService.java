@@ -1,6 +1,5 @@
 package com.hobiniaina.paymybuddy.service;
 
-import com.hobiniaina.paymybuddy.dto.UserDTO;
 import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +32,11 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 
-    public void register(UserDTO userDTO) {
-        User user = new User();
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setBalance(0.0);
-        userRepository.save(user);
+    public void register(User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            throw new RuntimeException("Un utilisateur avec cet email existe déjà");
+        }
+         user.setBalance(0.0);
+         userRepository.save(user);
     }
 }

@@ -1,6 +1,7 @@
 package com.hobiniaina.paymybuddy.controller;
 
-import com.hobiniaina.paymybuddy.dto.UserDTO;
+
+import com.hobiniaina.paymybuddy.model.User;
 import com.hobiniaina.paymybuddy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,16 +21,16 @@ public class RegistrationController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
+        model.addAttribute("user", new User());
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser( @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result, Model model) {
+    public String registerUser(@ModelAttribute("user") User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register";
         }
-        userService.register(userDTO);
+        userService.register(user);
         return "redirect:/register?success";
     }
 }
