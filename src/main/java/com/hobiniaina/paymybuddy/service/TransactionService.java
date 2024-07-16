@@ -7,6 +7,7 @@ import com.hobiniaina.paymybuddy.repository.TransactionRepository;
 import com.hobiniaina.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class TransactionService {
     public List<Transaction> getAllTransactionsByUser(User user) {
         return transactionRepository.findBySenderId(user.getId());
     }
-
+    @Transactional
     public void createAndSaveTransaction(Integer userId, TransactionDTO transactionDTO) {
 
          Double amount = transactionDTO.getAmount();

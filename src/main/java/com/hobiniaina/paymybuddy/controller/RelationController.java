@@ -29,19 +29,22 @@ public class RelationController {
 
     @PostMapping
     public String addRelation(@ModelAttribute("user") User user, Model model) {
-        User existingUser = userService.findByEmail(user.getEmail());
-        if (existingUser != null) {
-            User userOrigin = userService.getCurrentUser();
-            if (userOrigin != null) {
+
+        User userOrigin = userService.getCurrentUser();
+        if (userOrigin != null) {
+            try {
                 connectionService.addConnection(userOrigin, user.getEmail());
-                return "redirect:/ajouter-relation?success";
-            } else {
+            } catch (Exception e) {
+                model.addAttribute("error", "Utilisateur  non trouvé");
+                return "ajouter-relation";
+            }
+
+                return "redirect:/transfers/transfer";
+            } else{
                 model.addAttribute("error", "Utilisateur authentifié non trouvé");
                 return "ajouter-relation";
             }
-        } else {
-            model.addAttribute("error", "Utilisateur non trouvé");
-            return "ajouter-relation";
+
         }
     }
-}
+
