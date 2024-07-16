@@ -42,6 +42,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
             </form>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
         </div>
     </div>
 </div>

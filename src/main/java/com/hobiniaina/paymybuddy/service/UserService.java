@@ -36,7 +36,7 @@ public class UserService {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("Un utilisateur avec cet email existe déjà");
         }
-         user.setBalance(0.0);
+        user.setBalance(0.0);
          userRepository.save(user);
     }
 }
