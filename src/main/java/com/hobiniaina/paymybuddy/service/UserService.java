@@ -39,4 +39,5 @@ public class UserService {
         user.setBalance(0.0);
          userRepository.save(user);
     }
+
 }
