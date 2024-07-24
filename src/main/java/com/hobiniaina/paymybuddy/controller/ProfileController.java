@@ -13,15 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     private final UserService userService;
-
-    private Integer getCurrentUserId() {
-        return 1;
-    }
-
     @GetMapping
     public String getProfilePage(Model model) {
-        Integer userId = getCurrentUserId();
-        User currentUser = userService.findUserById(userId);
+        User currentUser = userService.getCurrentUser();
         model.addAttribute("user", currentUser);
         return "profile";
     }
@@ -29,9 +23,8 @@ public class ProfileController {
     @PostMapping
     public String updateProfile(@ModelAttribute User user, Model model) {
         try {
-            user.setId(getCurrentUserId());
             userService.updateUserProfile(user);
-            model.addAttribute("user", user);
+            model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("success", "Profil mis à jour avec succès !");
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors de la mise à jour du profil.");

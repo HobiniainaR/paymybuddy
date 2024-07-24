@@ -28,7 +28,9 @@
         <div><a th:href=" @{/transfers/transfer}" class="active">Transférer</a></div>
         <div><a th:href="@{/profile}">Profil</a></div>
         <div><a th:href="@{/ajouter-relation}" class="active">Ajouter relation</a></div>
-        <div><a th:href="@{/logout}">Se déconnecter</a></div>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-link" style="padding: 0;">Se déconnecter</button>
+        </form>
     </div>
 
     <form th:action="@{/ajouter-relation}" th:object="${user}" method="post">

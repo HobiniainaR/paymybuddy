@@ -31,12 +31,10 @@ public class TransactionController {
         model.addAttribute("balance", user.getBalance());
         return "transfer";
     }
-
     @PostMapping("/transfer")
     public String postTransfer(  TransactionDTO transactionDTO) {
         User user = userService.getCurrentUser();
         transactionService.createAndSaveTransaction(user.getId(), transactionDTO);
-
         return  "redirect:/transfers/transfer";
     }
 }

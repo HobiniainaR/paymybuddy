@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org " lang="">
+      xsi:schemaLocation="http://www.thymeleaf.org " lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Transférer</title>
@@ -14,7 +14,9 @@
             <a th:href="@{/transfers/transfer}" class="active">Transférer</a>
             <a th:href="@{/profile}">Profil</a>
             <a th:href="@{/ajouter-relation}">Ajouter relation</a>
-            <a th:href="@{/logout}">Se déconnecter</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-link" style="padding: 0;">Se déconnecter</button>
+            </form>
         </nav>
     </div>
 </div>

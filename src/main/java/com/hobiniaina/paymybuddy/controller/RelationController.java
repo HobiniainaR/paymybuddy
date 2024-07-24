@@ -20,13 +20,11 @@ public class RelationController {
 
     @Autowired
     private ConnectionService connectionService;
-
     @GetMapping
     public String showAddRelationPage(Model model) {
         model.addAttribute("user", new User());
         return "ajouter-relation";
     }
-
     @PostMapping
     public String addRelation(@ModelAttribute("user") User user, Model model) {
 
