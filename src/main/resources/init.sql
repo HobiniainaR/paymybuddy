@@ -25,11 +25,12 @@ CREATE TABLE IF NOT EXISTS `paymybuddy`.`user` (
   `username` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `balance` DOUBLE DEFAULT 0,
+  `balance` DOUBLE NULL DEFAULT NULL,
+
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
- ENGINE=InnoDB
- AUTO_INCREMENT =4
+ENGINE = InnoDB
+AUTO_INCREMENT = 17
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -43,17 +44,15 @@ CREATE TABLE IF NOT EXISTS `paymybuddy`.`connection` (
   `origin_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `connection_ibfk_1` (`user_id` ASC) VISIBLE,
-  INDEX `connection_ibfk_2_idx` (`origin_id` ASC) VISIBLE,
+  INDEX `FKkno133fjnqo7qm1kjn4pgkm9o` (`origin_id` ASC) VISIBLE,
   CONSTRAINT `connection_ibfk_1`
     FOREIGN KEY (`user_id`)
     REFERENCES `paymybuddy`.`user` (`id`),
-  CONSTRAINT `connection_ibfk_2`
+  CONSTRAINT `FKkno133fjnqo7qm1kjn4pgkm9o`
     FOREIGN KEY (`origin_id`)
-    REFERENCES `paymybuddy`.`connection` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `paymybuddy`.`user` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 28
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -68,16 +67,16 @@ CREATE TABLE IF NOT EXISTS `paymybuddy`.`transaction` (
   `description` VARCHAR(255) NOT NULL,
   `amount` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `transaction_ibfk_1` (`sender_id` ASC) VISIBLE,
   INDEX `transaction_ibfk_2` (`receiver_id` ASC) VISIBLE,
-  CONSTRAINT `transaction_ibfk_1`
+  INDEX `FKjpter5yuohdb58gyg6k5nympt` (`sender_id` ASC) VISIBLE,
+  CONSTRAINT `FKjpter5yuohdb58gyg6k5nympt`
     FOREIGN KEY (`sender_id`)
     REFERENCES `paymybuddy`.`user` (`id`),
   CONSTRAINT `transaction_ibfk_2`
     FOREIGN KEY (`receiver_id`)
     REFERENCES `paymybuddy`.`user` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 20
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -85,5 +84,3 @@ COLLATE = utf8mb4_0900_ai_ci;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-ALTER TABLE user ADD COLUMN balance DOUBLE DEFAULT 0;
-

@@ -18,5 +18,5 @@ public class User {
     private String email;
     private String password;
     private Double balance;
-    private String role;
+
 }
