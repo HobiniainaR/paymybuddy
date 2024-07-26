@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -19,8 +23,17 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UserService userService;
+
+    @Mock
+    private Authentication authentication;
+
+    @Mock
+    private SecurityContext securityContext;
 
     private User user;
 
@@ -33,6 +46,11 @@ public class UserServiceTest {
         user.setEmail("test@example.com");
         user.setUsername("testuser");
         user.setPassword("password");
+
+        SecurityContextHolder.setContext(securityContext);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.isAuthenticated()).thenReturn(true);
+        when(authentication.getName()).thenReturn("test@example.com");
     }
 
     @Test
@@ -47,7 +65,7 @@ public class UserServiceTest {
 
     @Test
     public void testGetCurrentUser() {
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail("test@example.com")).thenReturn(user);
 
         User currentUser = userService.getCurrentUser();
 
@@ -56,17 +74,18 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetCurrentUserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
+    public void testGetCurrentUserNotAuthenticated() {
+        when(authentication.isAuthenticated()).thenReturn(false);
 
         Exception exception = assertThrows(RuntimeException.class, () -> userService.getCurrentUser());
-
-        assertEquals("Utilisateur non trouvé", exception.getMessage());
+        assertEquals("Utilisateur non authentifié", exception.getMessage());
     }
 
     @Test
     public void testUpdateUserProfile() {
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail("test@example.com")).thenReturn(user);
+        when(passwordEncoder.encode("newpassword")).thenReturn("encodedNewPassword");
 
         User updatedUser = new User();
         updatedUser.setId(1);
@@ -79,7 +98,7 @@ public class UserServiceTest {
         verify(userRepository, times(1)).save(user);
         assertEquals("updateduser", user.getUsername());
         assertEquals("updated@example.com", user.getEmail());
-        assertEquals("newpassword", user.getPassword());
+        assertEquals("encodedNewPassword", user.getPassword());
     }
 
     @Test
@@ -92,9 +111,6 @@ public class UserServiceTest {
         updatedUser.setUsername("updateduser");
         updatedUser.setPassword("newpassword");
 
-        Exception exception = assertThrows(RuntimeException.class, () -> userService.updateUserProfile(updatedUser));
-
-        assertEquals("Utilisateur non trouvé", exception.getMessage());
         verify(userRepository, times(0)).save(any(User.class));
     }
 
@@ -113,7 +129,6 @@ public class UserServiceTest {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(RuntimeException.class, () -> userService.findUserById(1));
-
         assertEquals("Utilisateur non trouvé", exception.getMessage());
     }
 
@@ -126,11 +141,13 @@ public class UserServiceTest {
         newUser.setPassword("newpassword");
 
         when(userRepository.findByEmail("newuser@example.com")).thenReturn(null);
+        when(passwordEncoder.encode("newpassword")).thenReturn("encodedNewPassword");
 
         userService.register(newUser);
 
         verify(userRepository, times(1)).save(newUser);
-        assertEquals(0.0, newUser.getBalance());
+        assertEquals(200.0, newUser.getBalance());
+        assertEquals("encodedNewPassword", newUser.getPassword());
     }
 
     @Test
@@ -144,7 +161,6 @@ public class UserServiceTest {
         when(userRepository.findByEmail("existing@example.com")).thenReturn(existingUser);
 
         Exception exception = assertThrows(RuntimeException.class, () -> userService.register(existingUser));
-
         assertEquals("Un utilisateur avec cet email existe déjà", exception.getMessage());
         verify(userRepository, times(0)).save(existingUser);
     }

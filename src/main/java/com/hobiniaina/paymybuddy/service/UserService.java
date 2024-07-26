@@ -56,7 +56,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        user.setBalance(0.0);
+        user.setBalance(200.0);
         userRepository.save(user);
     }
 }
