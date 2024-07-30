@@ -24,7 +24,7 @@ public class ProfileController {
     public String updateProfile(@ModelAttribute User user, Model model) {
         try {
             userService.updateUserProfile(user);
-            model.addAttribute("user", userService.getCurrentUser());
+            model.addAttribute("user" ,user);
             model.addAttribute("success", "Profil mis à jour avec succès !");
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors de la mise à jour du profil.");

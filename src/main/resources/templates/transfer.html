@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org " lang="en">
+      xsi:schemaLocation="http://www.thymeleaf.org " lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Transférer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<div class="container" role="banner">
     <div class="header d-flex justify-content-between py-3">
         <div>Pay My Buddy</div>
         <nav>
@@ -20,51 +20,53 @@
         </nav>
     </div>
 </div>
+<div role="main">
 
-<div class="alert alert-info" role="alert">
-    Votre solde actuel est de : <span th:text="${balance}">0.00</span> €
-</div>
-
-<form th:action="@{/transfers/transfer}" th:object="${newTransfer}" method="post" class="mb-5">
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="receiverId">Sélectionner une relation</label>
-            <select id="receiverId" name="receiverId" class="form-control">
-                <option th:each="relation : ${relations}" th:value="${relation.user.id}"
-                        th:text="${relation.user.username}">Relation
-                </option>
-            </select>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" class="form-control" placeholder="Description"/>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="amount">Montant</label>
-            <input type="number" id="amount" name="amount" class="form-control" placeholder="0€"/>
-        </div>
-        <div class="form-group col-md-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary btn-block">Payer</button>
-        </div>
+    <div class="alert alert-info" role="alert">
+        Votre solde actuel est de : <span th:text="${balance}">0.00</span> €
     </div>
-</form>
 
-<h2 class="mt-5">Mes Transactions</h2>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Relations</th>
-        <th>Description</th>
-        <th>Montant</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="transaction : ${transfers}">
-        <td th:text="${transaction.receiver.username}">Relation</td>
-        <td th:text="${transaction.description}">Description</td>
-        <td th:text="${transaction.amount}">Montant</td>
-    </tr>
-    </tbody>
-</table>
+    <form th:action="@{/transfers/transfer}" th:object="${newTransfer}" method="post" class="mb-5">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="receiverId">Sélectionner une relation</label>
+                <select id="receiverId" name="receiverId" class="form-control">
+                    <option th:each="relation : ${relations}" th:value="${relation.user.id}"
+                            th:text="${relation.user.username}">Relation
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" class="form-control" placeholder="Description"/>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="amount">Montant</label>
+                <input type="number" id="amount" name="amount" class="form-control" placeholder="0€"/>
+            </div>
+            <div class="form-group col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary btn-block">Payer</button>
+            </div>
+        </div>
+    </form>
+
+    <h2 class="mt-5">Mes Transactions</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Relations</th>
+            <th>Description</th>
+            <th>Montant</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction : ${transfers}">
+            <td th:text="${transaction.receiver.username}">Relation</td>
+            <td th:text="${transaction.description}">Description</td>
+            <td th:text="${transaction.amount}">Montant</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

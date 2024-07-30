@@ -32,12 +32,10 @@ public class UserService {
     }
 
     public void updateUserProfile(User user) {
-        User currentUser = getCurrentUser();
-        User existingUser = userRepository.findById(currentUser.getId())
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        existingUser.setUsername(user.getUsername());
-        existingUser.setEmail(user.getEmail());
 
+        User existingUser = userRepository.findByEmail(user.getEmail());
+
+        existingUser.setUsername(user.getUsername());
 
         existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -56,7 +54,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        user.setBalance(200.0);
+        user.setBalance(0.0);
         userRepository.save(user);
     }
 }

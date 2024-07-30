@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Inscription</title>
@@ -20,7 +20,8 @@
     </style>
 </head>
 <body>
-<div class="container">
+
+<div class="container" role="main">
     <div class="card">
         <div class="card-body">
             <h2 class="text-center">
@@ -30,7 +31,8 @@
             <form th:action="@{/register}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="email">Mail</label>
@@ -38,7 +40,8 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe"
+                           required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
             </form>
